@@ -51,18 +51,28 @@ app.listen(process.env.PORT || 3000, () => {
   console.log(`App Started on PORT ${process.env.PORT || 3000}`);
 });
 
+// const mysql = require("mysql");
+
 const pool = mysql.createPool({
   connectionLimit: 100,
   host: "localhost",
   user: "root",
   password: "NedArthur23",
-  database: "database_name",
+  database: "cse341",
   debug: false,
 });
- 
-pool.query("SELECT * FROM table_name LIMIT 10", (err, rows) => {
+
+pool.query("SELECT * FROM users LIMIT 10", (err, rows) => {
+
   if (err) {
-    console.log("Error occurred during the connection.");
+    console.log("Database error:", err);
+    return;
   }
-  console.log(rows[0]);
+
+  if (rows && rows.length > 0) {
+    console.log(rows[0]);
+  } else {
+    console.log("No data found");
+  }
+
 });
